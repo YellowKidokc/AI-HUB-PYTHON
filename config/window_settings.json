@@ -1,0 +1,17 @@
+{
+  "main_window": {
+    "x": 100,
+    "y": 100,
+    "width": 1000,
+    "height": 720,
+    "always_on_top": false
+  },
+  "floating_player": {
+    "x": -1,
+    "y": -1,
+    "width": 200,
+    "height": 120,
+    "always_on_top": true
+  },
+  "global_always_on_top": false
+}

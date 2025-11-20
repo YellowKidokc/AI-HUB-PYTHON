@@ -1,0 +1,106 @@
+[
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "space",
+        "modifiers": ["ctrl"],
+        "desc": "Fix grammar and spelling (The Essential One!)",
+        "output": "Fix all grammar, spelling, and punctuation errors. Keep the original tone and meaning. Do not add extra words or change the style."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "p",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Make it professional",
+        "output": "Rewrite this in a professional business tone. Use formal language and proper business etiquette."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "c",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Make it casual",
+        "output": "Rewrite this in a casual, friendly tone. Use conversational language like you're talking to a friend."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "s",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Summarize text",
+        "output": "Summarize this text in 2-3 concise sentences. Keep only the most important points."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "e",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Expand and explain",
+        "output": "Expand this text with more details and examples. Make it longer and more comprehensive."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "l",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Simplify (ELI5)",
+        "output": "Explain this like I'm 5 years old. Use very simple words and short sentences."
+    },
+    {
+        "type": "Hotkey",
+        "action": "AI Rewrite",
+        "trigger": "b",
+        "modifiers": ["ctrl", "shift"],
+        "desc": "Make bullet points",
+        "output": "Convert this text into clear bullet points. Each point should be concise and start with a bullet."
+    },
+    {
+        "type": "Hotkey",
+        "action": "Send Text",
+        "trigger": "1",
+        "modifiers": ["ctrl", "alt"],
+        "desc": "Email: Thanks response",
+        "output": "Thank you for reaching out! I'll review this and get back to you shortly.\n\nBest regards"
+    },
+    {
+        "type": "Hotkey",
+        "action": "Send Text",
+        "trigger": "2",
+        "modifiers": ["ctrl", "alt"],
+        "desc": "Email: See attached",
+        "output": "Please see the attached file for more details. Let me know if you have any questions!"
+    },
+    {
+        "type": "Hotkey",
+        "action": "Send Text",
+        "trigger": "3",
+        "modifiers": ["ctrl", "alt"],
+        "desc": "Email: Meeting confirmation",
+        "output": "Thanks for scheduling this meeting. I've added it to my calendar and will see you then!"
+    },
+    {
+        "type": "Hotkey",
+        "action": "Send Text",
+        "trigger": "d",
+        "modifiers": ["ctrl", "alt"],
+        "desc": "Insert current date",
+        "output": "2024-01-15"
+    },
+    {
+        "type": "Hotkey",
+        "action": "Run Program",
+        "trigger": "n",
+        "modifiers": ["ctrl", "alt"],
+        "desc": "Open Notepad",
+        "output": "notepad.exe"
+    },
+    {
+        "type": "Hotkey",
+        "action": "Run Program",
+        "trigger": "c",
+        "modifiers": ["ctrl", "alt", "shift"],
+        "desc": "Open Calculator",
+        "output": "calc.exe"
+    }
+]

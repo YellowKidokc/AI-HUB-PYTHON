@@ -1,107 +1,289 @@
-# AI Hub (Python Desktop)
+# 🚀 AI Hub
 
-A modular PySide6 desktop application that brings together chat, writing prompts, spelling correction, global hotkeys, and hotstrings – all backed by the OpenAI Chat Completions API. The interface is dark-themed via [pyqtdarktheme 2.1.0](https://github.com/5yutan5/PyQtDarkTheme) and is designed so new capability tabs can be added over time without touching the core plumbing.
+**AI-powered desktop automation hub with voice control, shortcuts, chat, and mouse automation.**
 
-## Features
+![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Python](https://img.shields.io/badge/python-3.10+-green)
+![License](https://img.shields.io/badge/license-MIT-orange)
 
-- **Three core tabs**
-  - **Chat** – send system + user messages to OpenAI and view responses
-  - **Prompts** – run curated prompts on any text selection; replace in place or show popup results
-  - **Spelling** – one-click spelling & grammar fixes on selected text
-- **Global hotkeys** (via `keyboard`) available from any Windows application
-  - `Ctrl+Shift+J` – fix spelling (replace selection)
-  - `Ctrl+Shift+K` – open prompt navigator near the mouse
-  - `Ctrl+Alt+Shift+K` – bring the hub window to the foreground (configurable)
-- **Hotstrings** for quick snippets and AI-powered rewrites (toggle with `Ctrl+Alt+H`)
-  - `;sig` signature, `;date`, `;time`
-  - AI-driven `;fix`, `;clar`, `;short`, `;long` on the current selection
-- **Clipboard-safe selection helpers** preserve the user’s clipboard
-- **Configurable via environment variables or `settings.ini`**
-- **Modular architecture** ready for additional tabs, prompts, or backends
+---
 
-## Getting Started
+## ✨ Features
 
-### 1. Create and activate a virtual environment
+### 💬 **AI Chat**
+- Full AI conversations powered by OpenAI GPT-4o-mini
+- Context-aware responses
+- Persistent chat history
 
-```powershell
-py -3.11 -m venv .venv
-.venv\Scripts\activate
+### ⌨️ **Global Hotkeys**
+- **Ctrl+Space** - Fix spelling/grammar on selected text
+- **Ctrl+Alt+P** - Open prompt navigator
+- **Ctrl+Alt+C** - Clipboard manager
+- **Ctrl+Alt+G** - Show/hide main window
+- **Ctrl+M** - Mouse automation (customizable)
+
+### 🖱️ **Mouse Automation**
+- Click anywhere with a hotkey
+- Position recorder with live coordinates
+- Perfect for repetitive tasks (mic toggle, camera control, etc.)
+- See [Mouse Automation Guide](docs/MOUSE_AUTOMATION_GUIDE.md)
+
+### 🎙️ **Voice Control**
+- Text-to-speech with edge-tts
+- Voice recognition with Whisper
+- Floating audio player
+
+### ⚡ **Custom Shortcuts**
+- Create custom hotkeys for any action
+- Text expansion (hotstrings)
+- AI-powered text transformations
+- Mouse click automation
+
+### 📝 **Prompts Manager**
+- Create and manage reusable AI prompts
+- Full CRUD interface (Create, Read, Update, Delete)
+- Reorder prompts with drag-and-drop style controls
+- No hardcoding - everything through GUI
+- See [Prompts Guide](docs/PROMPTS_GUIDE.md)
+
+### 📋 **Clipboard Manager**
+- Auto-save clipboard history
+- Pin important items
+- Assign hotkeys to clips
+- Persistent storage
+
+### 🔍 **Web Scraper**
+- Multi-engine search (Google, Bing, Yahoo, DuckDuckGo, etc.)
+- Export results to TXT/JSON/CSV
+- Proxy support
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- **Python 3.10+**
+- **Windows** (Linux support available)
+- **OpenAI API Key** ([Get one here](https://platform.openai.com/api-keys))
+
+### Installation
+
+#### Option 1: Quick Setup (Windows)
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/AI-HUB.git
+cd AI-HUB
+
+# 2. Set your API key
+set_api_key.bat
+
+# 3. Start AI Hub
+startup_ai_hub.bat
 ```
 
+#### Option 2: Manual Setup
 ```bash
-# macOS/Linux
-python3 -m venv .venv
-source .venv/bin/activate
-```
+# 1. Clone the repository
+git clone https://github.com/yourusername/AI-HUB.git
+cd AI-HUB
 
-### 2. Install dependencies
-
-```bash
+# 2. Install dependencies
 pip install -e .
+
+# 3. (Optional) Install voice features
+pip install -e ".[voice]"
+
+# 4. Configure API key
+# Edit settings.ini and add your OpenAI API key
+
+# 5. Run AI Hub
+python -m ai_hub.app
 ```
 
-This installs PySide6, pyqtdarktheme 2.1.0, requests, keyboard, and the platform-specific clipboard helpers (pywin32 on Windows, pyperclip elsewhere).
+---
 
-### 3. Configure OpenAI access
+## 📖 Documentation
 
-Set an environment variable for the API key (recommended):
+- **[First Time Setup](README_FIRST_TIME_SETUP.md)** - Complete setup guide
+- **[Mouse Automation Guide](docs/MOUSE_AUTOMATION_GUIDE.md)** - Click automation tutorial
+- **[Prompts Manager Guide](docs/PROMPTS_GUIDE.md)** - Create and manage AI prompts
+- **[API Key Setup](SETUP_API_KEY.md)** - Detailed API configuration
+- **[Search Scraper Guide](SEARCH_SCRAPER_GUIDE.md)** - Web scraping instructions
 
-```powershell
-setx OPENAI_API_KEY "sk-your-key"
+---
+
+## 🎯 Use Cases
+
+### 1. **Mic Toggle Automation**
+Record your mic button position and toggle it with Ctrl+M from anywhere!
+
+### 2. **Text Correction**
+Select any text, press Ctrl+Space, and get instant grammar/spelling fixes.
+
+### 3. **Clipboard Management**
+Save and reuse frequently used text snippets with custom hotkeys.
+
+### 4. **Custom Workflows**
+Create multi-step automations combining mouse clicks, text expansion, and AI actions.
+
+### 5. **Voice Control**
+Convert text to speech or use voice commands for hands-free operation.
+
+---
+
+## 🔧 Configuration
+
+### API Key Setup
+```ini
+# settings.ini
+[API]
+api_key = sk-your-api-key-here
+model = gpt-4o-mini
 ```
 
-Optional overrides:
+### Custom Hotkeys
+Configure in the **⚡ Shortcuts** tab:
+- Choose modifiers (Ctrl, Alt, Shift)
+- Select trigger key
+- Define action (text, mouse click, AI prompt)
 
-- `OPENAI_ENDPOINT` (defaults to `https://api.openai.com/v1/chat/completions`)
-- `OPENAI_MODEL` (defaults to `gpt-4o-mini`)
-- `AI_HUB_TIMEOUT` (seconds, defaults to `120`)
+### Mouse Automation
+1. Open **⚡ Shortcuts** tab
+2. Select **Action: Mouse Click**
+3. Click **🎯 Open Position Recorder**
+4. Hover over target and record position
+5. Create hotkey with recorded coordinates
 
-You can also create a `settings.ini` next to the executable with the same keys under `[openai]`, plus `[hotkeys]` and `[hotstrings]` sections for overrides.
+---
 
-### 4. Run the desktop app
+## 🛠️ Development
 
+### Project Structure
+```
+AI-HUB/
+├── src/
+│   └── ai_hub/          # Main application code
+├── docs/                # Documentation
+├── config/              # Configuration files
+├── settings.ini         # User settings
+├── pyproject.toml       # Project metadata
+└── requirements.txt     # Python dependencies
+```
+
+### Running from Source
 ```bash
-ai-hub
+# Install in development mode
+pip install -e ".[voice]"
+
+# Run the application
+python -m ai_hub.app
 ```
 
-## Auto-start on Windows
+### Building Executable
+```bash
+# Use PyInstaller
+python Windows_and_Linux/pyinstaller-build-script.py
+```
 
-To launch AI Hub automatically at login:
+---
 
-1. Run `pyinstaller --noconfirm --onefile -w -n AIHubLauncher src/ai_hub/app.py` (optional) to package as a single EXE, or simply use the `ai-hub` console script inside your virtual environment.
-2. Press `Win + R`, type `shell:startup`, and press Enter to open the Startup folder.
-3. Create a shortcut to either the generated EXE or to `python.exe <path>\ai_hub\app.py` with the virtual environment activated.
-4. The hub will now launch at every logon.
+## 🔒 Privacy & Security
 
-Alternatively, create a Scheduled Task (Task Scheduler → Create Task → Trigger “At log on”) that runs your chosen command.
+- **API Key**: Stored locally in `settings.ini` (never shared)
+- **Clipboard**: Stored locally in `config/clipboard_data.json`
+- **Chat History**: Stored locally in `config/chat_history.json`
+- **No Telemetry**: No data is sent anywhere except OpenAI API calls
 
-## Extending the Hub
+---
 
-The application is structured for incremental growth:
+## 🐛 Troubleshooting
 
-- **Tabs** live under `src/ai_hub/ui/tabs/`. Subclass `BaseTab` and add to the `QTabWidget` in `MainWindow`.
-- **Prompts** are defined in `src/ai_hub/services/prompt_manager.py`. Add more prompt definitions or load from disk.
-- **Global hotkeys** live in `src/ai_hub/hotkeys/global_hotkeys.py`. Add new bindings or per-prompt hotkeys.
-- **Hotstrings** are registered in `MainWindow._register_default_hotstrings`. Swap in a JSON loader or UI editor later.
-- **Backend services** (OpenAI client, future FastAPI server, vector search, etc.) live under `src/ai_hub/services/`.
+### App Won't Start
+If AI Hub isn't working, try disabling mouse automation:
+```bash
+disable_mouse_automation.bat
+```
 
-Keep adding modules and attach them as new tabs or dialog workflows—no need to rewrite the main window.
+Then restart AI Hub. See [Full Troubleshooting Guide](docs/TROUBLESHOOTING.md)
 
-## Roadmap Ideas
+### Hotkeys Don't Work
+- Ensure AI Hub is running (check system tray)
+- Try running as Administrator
+- Check for conflicting hotkeys
 
-- Prompt profiles and tagging, saved per user
-- FastAPI/HTTP backend for advanced workflows and background jobs
-- Document ingestion (PDF, DOCX) with summarization
-- Audio capture and Whisper transcription tab
-- Local model routing (Ollama, GPT4All) with fallback
-- Tray icon with quick actions and notifications
-- Hotstring editor UI stored in JSON/SQLite
+### Mouse Automation Fails
+```bash
+# Install pyautogui
+pip install pyautogui
 
-## Development Tips
+# Or disable it temporarily
+disable_mouse_automation.bat
+```
 
-- Use `settings.ini` during development to experiment with hotkey/hotstring mappings without touching code.
-- Wrap long-running operations in threads (as shown) to keep the UI responsive.
-- When adding new dependencies, update `pyproject.toml`.
-- Consider adding a `tests/` folder with Qt unit tests as new logic is added.
+### API Key Errors
+- Verify key is correct in `settings.ini`
+- Check OpenAI account has credits
+- Run `set_api_key.bat` to reconfigure
 
-Happy building!
+### Voice Features Not Working
+```bash
+# Install voice dependencies
+pip install -e ".[voice]"
+```
+
+**For more help**: See [Troubleshooting Guide](docs/TROUBLESHOOTING.md) or [FAQ](docs/FAQ.md)
+
+---
+
+## 📦 Dependencies
+
+### Core
+- PySide6 - GUI framework
+- requests - HTTP library
+- keyboard - Hotkey detection
+- pynput - Input control
+- pyperclip - Clipboard access
+- pyautogui - Mouse automation
+
+### Optional (Voice)
+- edge-tts - Text-to-speech
+- faster-whisper - Speech recognition
+- sounddevice - Audio I/O
+- pygame - Audio playback
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 🌟 Acknowledgments
+
+- Built with [PySide6](https://www.qt.io/qt-for-python)
+- AI powered by [OpenAI](https://openai.com)
+- Voice by [edge-tts](https://github.com/rany2/edge-tts)
+- Speech recognition by [faster-whisper](https://github.com/guillaumekln/faster-whisper)
+
+---
+
+## 📞 Support
+
+- **Documentation**: Check the `docs/` folder
+- **Issues**: Open an issue on GitHub
+- **Setup Help**: See `README_FIRST_TIME_SETUP.md`
+
+---
+
+**Made with ❤️ for productivity enthusiasts**

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import threading
 
-from PySide6.QtWidgets import QLabel, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QLabel, QPushButton, QVBoxLayout, QTextEdit, QHBoxLayout
+from PySide6.QtCore import Qt
 
 from ...services.openai_client import OpenAIClient
 from ...services.prompt_manager import Prompt
@@ -15,24 +16,68 @@ class SpellingTab(BaseTab):
         super().__init__()
         self._client = client
         self._prompt = spelling_prompt
+        self._text_edit = None
         self._build_ui()
 
     def _build_ui(self) -> None:
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("Select text in any window, then click to fix spelling:"))
-        button = QPushButton("Fix Spelling Now", self)
-        button.clicked.connect(self._on_fix_clicked)
-        layout.addWidget(button)
+        
+        # Label
+        layout.addWidget(QLabel("Paste or type text to fix spelling:"))
+        
+        # Text editor
+        self._text_edit = QTextEdit()
+        self._text_edit.setPlaceholderText("Type or paste text here, then click Fix or press Ctrl+Alt+Spacebar")
+        self._text_edit.setMinimumHeight(200)
+        layout.addWidget(self._text_edit)
+        
+        # Buttons
+        btn_layout = QHBoxLayout()
+        
+        fix_btn = QPushButton("Fix Spelling Now (Ctrl+Alt+Space)", self)
+        fix_btn.clicked.connect(self._on_fix_clicked)
+        btn_layout.addWidget(fix_btn)
+        
+        clear_btn = QPushButton("Clear", self)
+        clear_btn.clicked.connect(lambda: self._text_edit.clear())
+        btn_layout.addWidget(clear_btn)
+        
+        layout.addLayout(btn_layout)
         layout.addStretch(1)
 
     def _on_fix_clicked(self) -> None:
-        selection = get_selection().text
-        if not selection.strip():
+        """Fix spelling in the text field."""
+        text = self._text_edit.toPlainText()
+        
+        if not text.strip():
             return
 
+        # Save original for undo
+        self._original_text = text
+        
         def run() -> None:
-            output = self._client.chat(self._prompt.system or None, self._prompt.build_message(selection), self._prompt.temperature)
+            output = self._client.chat(
+                self._prompt.system or None, 
+                self._prompt.build_message(text), 
+                self._prompt.temperature
+            )
             if output.strip():
-                replace_selection(output)
+                # Update text field with fixed version
+                self._text_edit.setPlainText(output)
 
         threading.Thread(target=run, daemon=True).start()
+
+    def keyPressEvent(self, event) -> None:
+        """Handle Ctrl+Alt+Spacebar hotkey."""
+        # Check for Ctrl+Alt+Spacebar
+        if (event.key() == Qt.Key.Key_Space and 
+            event.modifiers() & Qt.KeyboardModifier.ControlModifier and
+            event.modifiers() & Qt.KeyboardModifier.AltModifier):
+            self._on_fix_clicked()
+            event.accept()
+        elif event.key() == Qt.Key.Key_Z and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            # Ctrl+Z for undo - built into QTextEdit
+            self._text_edit.undo()
+            event.accept()
+        else:
+            super().keyPressEvent(event)

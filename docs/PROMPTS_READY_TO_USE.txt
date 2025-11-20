@@ -1,0 +1,366 @@
+================================================================================
+🚀 COPY & PASTE READY PROMPTS FOR CLAUDE / GITHUB COPILOT
+================================================================================
+
+These are pre-formatted prompts. Just copy the entire section and paste into Claude.
+Claude will generate complete working code that you can drop right into the project.
+
+================================================================================
+PROMPT #1: CLIPBOARD HISTORY MANAGER (EASIEST - START HERE!)
+================================================================================
+
+Copy everything between the lines below:
+
+---START COPY HERE---
+
+I'm extending a Python PySide6 desktop app called "AI Hub" built with a specific architecture.
+
+ARCHITECTURE CONTEXT:
+- Project at: D:\AI-HUB 2 Claude\
+- Main GUI: src/ai_hub/ui/main_window.py
+- Tabs stored in: src/ai_hub/ui/tabs/
+- Services in: src/ai_hub/services/
+- Config stored as JSON in: config/ directory
+- All UI uses dark theme (#1e1e1e background, #007acc buttons)
+- Threading used for long operations (never blocks UI)
+
+FEATURE REQUEST: Clipboard History Manager (Side Panel)
+
+I need a clipboard history manager as a SIDE PANEL (not a tab) that:
+1. Monitors clipboard in background and stores every item
+2. Shows 1000-2000 items with timestamps
+3. Stores for 1-2 weeks (configurable, default 2 weeks)
+4. Click item → copies to clipboard immediately
+5. Search/filter by text
+6. Persistent storage in config/clipboard_history.json
+7. Auto-prunes items older than retention period
+8. Runs continuously without blocking UI
+
+REQUIREMENTS:
+- Follow the CLAUDE_FEATURE_TEMPLATE.md structure
+- 3 main files needed:
+  1. src/ai_hub/services/clipboard_manager.py (business logic)
+  2. src/ai_hub/ui/clipboard_panel.py (UI widget)
+  3. Integration code for src/ai_hub/ui/main_window.py
+- Dark theme styling (#252525 backgrounds, #e0e0e0 text)
+- JSON storage: config/clipboard_history.json
+- Threading: Monitor clipboard in background thread
+- Auto-cleanup: Remove items >2 weeks old
+
+PROVIDE:
+1. Complete clipboard_manager.py with all methods
+2. Complete clipboard_panel.py with UI
+3. Exact code lines to add to main_window.py
+4. Example JSON schema for clipboard_history.json
+
+---END COPY HERE---
+
+================================================================================
+PROMPT #2: WEB SCRAPER (Ctrl+Alt+8 & Ctrl+Alt+S)
+================================================================================
+
+Copy everything between the lines below:
+
+---START COPY HERE---
+
+I'm extending a Python PySide6 desktop app called "AI Hub" with a specific architecture.
+
+ARCHITECTURE CONTEXT:
+- Project structure: D:\AI-HUB 2 Claude\src/ai_hub/
+- Services in: services/ (for business logic)
+- Hotkeys in: hotkeys/ (for keyboard handlers)
+- Config saved as JSON in: config/ directory
+- Threading: Always used for long operations
+- Dark theme: #1e1e1e bg, #007acc buttons, #e0e0e0 text
+
+FEATURE REQUEST: Web Scraper with Hotkeys
+
+I need a web scraper service with two hotkeys:
+1. Ctrl+Alt+8: Scrape current clipboard URL → Download to Downloads folder
+2. Ctrl+Alt+S: Scrape → Let user choose destination folder
+
+REQUIREMENTS:
+- 2 main files:
+  1. src/ai_hub/services/web_scraper.py (scraping logic)
+  2. src/ai_hub/hotkeys/web_scraper_hotkey.py (hotkey handlers)
+- Use BeautifulSoup4 for scraping (add to pyproject.toml if needed)
+- Features:
+  * Auto-detect files to download (links, PDFs, images)
+  * Show progress notification
+  * Handle errors gracefully
+  * Save job progress to config/scraper_jobs.json
+- Threading: Must not block keyboard/UI
+- Logging: Print status to console
+- Integration: Register in src/ai_hub/hotkeys/global_hotkeys.py
+
+PROVIDE:
+1. Complete web_scraper.py with BeautifulSoup integration
+2. Complete web_scraper_hotkey.py with both hotkey handlers
+3. Code to integrate into global_hotkeys.py
+4. Example config/scraper_jobs.json schema
+
+---END COPY HERE---
+
+================================================================================
+PROMPT #3: SPECIALIZED SEARCH GUI (50-100 Search Templates)
+================================================================================
+
+Copy everything between the lines below:
+
+---START COPY HERE---
+
+I'm extending a Python PySide6 desktop app called "AI Hub" with this architecture:
+
+ARCHITECTURE CONTEXT:
+- UI tabs in: src/ai_hub/ui/tabs/
+- Services in: src/ai_hub/services/
+- Base tab class: src/ai_hub/ui/tabs/base.py (all tabs inherit from this)
+- Dark theme: #1e1e1e bg, #007acc buttons, #252525 input fields
+- Config stored as JSON in: config/ directory
+
+FEATURE REQUEST: Specialized Search GUI (New Tab)
+
+I need a NEW TAB showing 50-100 pre-configured search templates:
+
+SEARCH TEMPLATES NEEDED (sample):
+- Google Docs: "site:docs.google.com {query}"
+- GitHub: "site:github.com {query}"
+- PDFs: "filetype:pdf {query}"
+- Academic: "site:scholar.google.com {query}"
+- Datasets: "site:kaggle.com {query}"
+- Stack Overflow: "site:stackoverflow.com {query}"
+- Reddit: "site:reddit.com {query}"
+- Wikipedia: "site:wikipedia.org {query}"
+- YouTube: "site:youtube.com {query}"
+- LinkedIn: "site:linkedin.com {query}"
+... (provide 40+ more)
+
+REQUIREMENTS:
+- New tab file: src/ai_hub/ui/tabs/specialized_search_tab.py
+- Service file: src/ai_hub/services/search_templates.py
+- Features:
+  1. List of 50-100 built-in templates
+  2. Search bar to filter templates by name/description
+  3. Click template → Opens browser with search applied
+  4. Ability to add custom searches
+  5. Save custom searches to config/search_templates.json
+  6. Each template has: name, description, search_url
+- Dark theme applied
+- Integration code for main_window.py
+
+PROVIDE:
+1. Complete SpecializedSearchTab class with UI
+2. Complete search_templates.py with all 50+ templates
+3. Code to add to main_window.py
+4. Full list of 50-100 search template examples
+5. Example config/search_templates.json
+
+---END COPY HERE---
+
+================================================================================
+PROMPT #4: WEB CRAWLER (Recursive Site Crawling)
+================================================================================
+
+Copy everything between the lines below:
+
+---START COPY HERE---
+
+I'm extending a Python PySide6 desktop app with this architecture:
+
+ARCHITECTURE CONTEXT:
+- Services in: src/ai_hub/services/
+- UI tabs in: src/ai_hub/ui/tabs/
+- Threading: Always used for long operations (never blocks UI)
+- Config: JSON files in config/ directory
+- Dark theme: #1e1e1e bg, #252525 inputs, #e0e0e0 text
+
+FEATURE REQUEST: Web Crawler Tab
+
+I need a NEW TAB for web crawling with:
+
+CRAWLER FEATURES:
+1. Input field for start URL
+2. Depth setting (1-5 levels)
+3. Extract options: links, text, images, PDFs
+4. Start/Stop/Pause buttons
+5. Real-time progress display (X of Y pages crawled)
+6. Results stored in config/crawl_results.json
+7. Download results as JSON/CSV
+
+REQUIREMENTS:
+- New tab file: src/ai_hub/ui/tabs/web_crawler_tab.py
+- Service file: src/ai_hub/services/web_crawler.py
+- Threading: Crawling runs on background thread
+- Safety: Max 1000 pages per crawl, timeout after 30 min
+- Results schema:
+  {
+    "start_url": "...",
+    "timestamp": "2024-01-15T10:30:00",
+    "pages_crawled": 150,
+    "links": [...],
+    "images": [...],
+    "pdfs": [...],
+    "text_pages": [...]
+  }
+- Progress updates to UI in real-time
+- Error handling for failed pages
+
+PROVIDE:
+1. Complete web_crawler.py with threading
+2. Complete web_crawler_tab.py with progress UI
+3. Integration code for main_window.py
+4. Threading implementation (show how to update UI from background thread)
+5. Results storage schema
+
+---END COPY HERE---
+
+================================================================================
+PROMPT #5: CUSTOM COMBINATION (Copy & Modify as Needed)
+================================================================================
+
+Copy everything between the lines, then modify the [REQUIREMENTS] section:
+
+---START COPY HERE---
+
+I'm extending a Python PySide6 desktop app called "AI Hub" built with:
+
+ARCHITECTURE CONTEXT:
+- Project root: D:\AI-HUB 2 Claude\
+- Source code: src/ai_hub/
+- Tabs/UI: src/ai_hub/ui/tabs/
+- Services: src/ai_hub/services/
+- Hotkeys: src/ai_hub/hotkeys/
+- Config: config/ (JSON files)
+- Main window: src/ai_hub/ui/main_window.py
+- Dark theme: #1e1e1e, #252525, #007acc
+- Threading: Always for long operations
+
+REQUIREMENTS:
+[PASTE YOUR SPECIFIC REQUIREMENTS HERE]
+
+Following the CLAUDE_FEATURE_TEMPLATE.md pattern, please generate:
+1. Service classes (in services/ directory)
+2. UI component (tab or popup)
+3. Hotkey handlers (if applicable)
+4. Config schema
+5. Integration code for main_window.py
+
+Use dark theme, threading, JSON persistence, and follow existing code patterns.
+
+---END COPY HERE---
+
+================================================================================
+HOW TO USE THESE PROMPTS
+================================================================================
+
+STEP 1: Copy the entire prompt section (between the lines)
+
+STEP 2: Choose your platform:
+
+OPTION A - GitHub Copilot (VS Code):
+  1. Press Ctrl+Shift+I (open Copilot Chat)
+  2. Paste prompt
+  3. Click "Run" or press Enter
+  4. Wait for code generation
+
+OPTION B - Claude Web:
+  1. Go to claude.ai
+  2. Start new conversation
+  3. Paste prompt
+  4. Click "Send"
+  5. Wait for response
+
+OPTION C - Command Line:
+  Run this Python script with your API key:
+  
+  import anthropic
+  client = anthropic.Anthropic(api_key="your-key")
+  prompt = "... paste prompt here ..."
+  msg = client.messages.create(
+    model="claude-opus",
+    max_tokens=4096,
+    messages=[{"role": "user", "content": prompt}]
+  )
+  print(msg.content[0].text)
+
+STEP 3: After Claude generates code:
+  1. Copy the generated files
+  2. Create them in correct directories
+  3. Update main_window.py with integration code
+  4. Run: python -m ai_hub.app
+  5. Test the new feature
+
+================================================================================
+PRIORITY ORDER (RECOMMENDED)
+================================================================================
+
+1. ✅ Clipboard History Manager (Prompt #1)
+   - Easiest to implement
+   - Most useful daily
+   - Time: 2-3 hours
+   
+2. ✅ Specialized Search GUI (Prompt #3)
+   - Quick to implement
+   - Super useful
+   - Time: 3-4 hours
+   
+3. ✅ Web Scraper (Prompt #2)
+   - Medium complexity
+   - Very powerful
+   - Time: 4-6 hours
+   
+4. ✅ Web Crawler (Prompt #4)
+   - More complex
+   - Good for research
+   - Time: 6-8 hours
+
+================================================================================
+PARALLEL DEVELOPMENT TRICK
+================================================================================
+
+You can work on multiple features at once!
+
+1. Give Prompt #1 to Claude → Generates Clipboard Manager
+2. (While reading code) Give Prompt #3 to Claude Instance 2 → Generates Search
+3. (While reading code) Give Prompt #2 to Claude Instance 3 → Generates Scraper
+4. (While reading code) Give Prompt #4 to Claude Instance 4 → Generates Crawler
+
+Result: 4 features generated in parallel! ⚡
+
+Then you just:
+1. Copy files
+2. Integrate one by one
+3. Test each
+
+================================================================================
+ERROR HANDLING
+================================================================================
+
+If Claude's code has errors:
+
+1. Copy the exact error message
+2. Paste back to Claude: "This code has an error: [ERROR MESSAGE]"
+3. Claude will fix and regenerate
+
+Example:
+  You: "This code has an error on line 42: 
+        AttributeError: 'NoneType' object has no attribute 'setText'"
+  
+  Claude: "Ah, I see the issue. Here's the corrected code..."
+
+================================================================================
+READY TO START? 
+================================================================================
+
+1. Pick a prompt above (start with #1 - Clipboard Manager)
+2. Copy it completely
+3. Paste into Claude or Copilot
+4. Wait for code generation
+5. Follow the integration steps
+6. Run: python -m ai_hub.app
+7. Test!
+
+You're about to multiply your development speed! 🚀
+
+================================================================================
+

@@ -39,7 +39,7 @@ class OpenAIClient:
 
         payload = {
             "model": self._settings.model,
-            "messages": [msg.__dict__ for msg in messages],
+            "messages": [{"role": msg.role, "content": msg.content} for msg in messages],
             "temperature": temperature,
         }
         headers = {

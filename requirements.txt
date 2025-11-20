@@ -1,0 +1,17 @@
+# AI Hub - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Dependencies
+PySide6>=6.6,<7.0
+requests>=2.31
+keyboard>=0.13
+pynput>=1.8
+pyperclip>=1.8
+pyautogui>=0.9.54
+
+# Windows-specific
+pywin32>=306; platform_system == "Windows"
+
+# Optional Voice Dependencies
+# Install with: pip install -r requirements.txt -r requirements-voice.txt
+# Or: pip install -e ".[voice]"

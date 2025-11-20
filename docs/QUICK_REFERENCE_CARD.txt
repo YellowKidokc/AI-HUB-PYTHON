@@ -1,0 +1,306 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    CLAUDE DEVELOPMENT QUICK REFERENCE                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+🎯 FEATURE PROMPTS AT A GLANCE:
+════════════════════════════════════════════════════════════════════════════
+
+1️⃣  CLIPBOARD HISTORY MANAGER
+    File: PROMPTS_READY_TO_USE.txt → Prompt #1
+    Time: 30 minutes
+    What: Monitor clipboard, store 1000-2000 items with 1-2 week retention
+    Why: Most useful daily feature
+    Files: clipboard_manager.py + clipboard_panel.py
+
+2️⃣  SPECIALIZED SEARCH GUI
+    File: PROMPTS_READY_TO_USE.txt → Prompt #3
+    Time: 45 minutes
+    What: 50-100 pre-configured search templates (Google, GitHub, etc.)
+    Why: Super useful for research
+    Files: specialized_search_tab.py + search_templates.py
+
+3️⃣  WEB SCRAPER
+    File: PROMPTS_READY_TO_USE.txt → Prompt #2
+    Time: 60 minutes
+    What: Download from clipboard (Ctrl+Alt+8) or choose folder (Ctrl+Alt+S)
+    Why: Powerful automation
+    Files: web_scraper.py + web_scraper_hotkey.py
+
+4️⃣  WEB CRAWLER
+    File: PROMPTS_READY_TO_USE.txt → Prompt #4
+    Time: 60 minutes
+    What: Recursively crawl websites, extract links/images/PDFs
+    Why: Research and data extraction
+    Files: web_crawler.py + web_crawler_tab.py
+
+
+📋 FILE LOCATIONS:
+════════════════════════════════════════════════════════════════════════════
+
+Business Logic (Services):
+  → src/ai_hub/services/my_service.py
+
+User Interface (Tabs):
+  → src/ai_hub/ui/tabs/my_feature_tab.py
+
+Keyboard Handlers:
+  → src/ai_hub/hotkeys/my_feature_hotkey.py
+
+Configuration:
+  → config/my_feature_config.json
+
+Main Integration:
+  → src/ai_hub/ui/main_window.py (add imports + initialization)
+
+
+🔧 DARK THEME COLORS (Copy & Paste):
+════════════════════════════════════════════════════════════════════════════
+
+Background:       #1e1e1e  (black)
+Widget BG:        #252525  (dark gray)
+Border:           #3d3d3d  (gray)
+Text:             #e0e0e0  (light gray)
+Button BG:        #007acc  (blue)
+Button Hover:     #005a9e  (darker blue)
+Button Press:     #004578  (darkest blue)
+
+Standard Input Stylesheet:
+  background-color: #252525;
+  color: #e0e0e0;
+  border: 1px solid #3d3d3d;
+  padding: 5px;
+  border-radius: 3px;
+
+Standard Button Stylesheet:
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 3px;
+  font-weight: bold;
+
+
+🚀 CLAUDE DEVELOPMENT WORKFLOW:
+════════════════════════════════════════════════════════════════════════════
+
+STEP 1: WRITE PROMPT
+  ├─ Open: PROMPTS_READY_TO_USE.txt
+  ├─ Copy: Entire prompt section
+  └─ Paste: Into Claude
+
+STEP 2: CLAUDE GENERATES (3-5 min)
+  ├─ Wait for code generation
+  ├─ Claude creates service + UI + integration code
+  └─ Read through to understand
+
+STEP 3: CREATE FILES
+  ├─ Create: src/ai_hub/services/my_feature.py
+  ├─ Create: src/ai_hub/ui/tabs/my_feature_tab.py
+  ├─ Create: src/ai_hub/hotkeys/my_feature_hotkey.py (if needed)
+  └─ Copy code from Claude into files
+
+STEP 4: INTEGRATE
+  ├─ Open: src/ai_hub/ui/main_window.py
+  ├─ Add: import statements for new feature
+  ├─ Add: tab initialization in __init__()
+  ├─ Add: hotkey registration if applicable
+  └─ Add: cleanup in closeEvent()
+
+STEP 5: TEST
+  ├─ Run: python -m ai_hub.app
+  ├─ Or: Double-click run_ai_hub.bat
+  ├─ Click: Your new feature tab
+  └─ Test: All functionality
+
+
+📂 INTEGRATION CODE TEMPLATE:
+════════════════════════════════════════════════════════════════════════════
+
+At top of main_window.py, add to imports:
+  from .tabs.my_feature_tab import MyFeatureTab
+  from ..hotkeys.my_feature_hotkey import MyFeatureHotkey
+
+In MainWindow.__init__(), after other tabs:
+  self._my_feature_tab = MyFeatureTab(self._client)
+  self._tabs.addTab(self._my_feature_tab, "My Feature")
+
+If using hotkey, add to __init__():
+  self._my_feature_hotkey = MyFeatureHotkey(on_trigger=self._on_my_feature)
+  self._my_feature_hotkey.start()
+
+Add new method to MainWindow class:
+  def _on_my_feature(self) -> None:
+    index = self._tabs.indexOf(self._my_feature_tab)
+    self._tabs.setCurrentIndex(index)
+
+In MainWindow.closeEvent(), before super().closeEvent():
+  if hasattr(self, '_my_feature_hotkey'):
+    self._my_feature_hotkey.stop()
+
+
+🧵 THREADING PATTERN (For Long Operations):
+════════════════════════════════════════════════════════════════════════════
+
+import threading
+
+def _on_action(self):
+    # Don't do long operations here!
+    def run():
+        # LONG OPERATION GOES HERE
+        result = self._api_call()
+        # Now update UI
+        self._update_ui(result)
+    
+    # Start on background thread
+    threading.Thread(target=run, daemon=True).start()
+
+
+💾 JSON CONFIG PATTERN:
+════════════════════════════════════════════════════════════════════════════
+
+from pathlib import Path
+from dataclasses import dataclass, asdict
+import json
+
+@dataclass
+class MyConfig:
+    enabled: bool = True
+    setting1: str = "default"
+    count: int = 0
+
+class MyService:
+    def __init__(self, config_dir="config"):
+        self._config_file = Path(config_dir) / "my_config.json"
+        self._config_file.parent.mkdir(exist_ok=True)
+        self._load_config()
+    
+    def _load_config(self):
+        if self._config_file.exists():
+            with open(self._config_file) as f:
+                data = json.load(f)
+                return MyConfig(**data)
+        return MyConfig()
+    
+    def _save_config(self):
+        with open(self._config_file, 'w') as f:
+            json.dump(asdict(self._config), f, indent=2)
+
+
+🔄 PARALLEL DEVELOPMENT TRICK:
+════════════════════════════════════════════════════════════════════════════
+
+Build 4 features at the same time!
+
+Timeline:
+  T+0:   Give Prompt #1 to Claude → Building Clipboard Manager
+  T+5:   Give Prompt #2 to Claude → Building Web Scraper (parallel)
+  T+10:  Give Prompt #3 to Claude → Building Search GUI (parallel)
+  T+15:  Give Prompt #4 to Claude → Building Web Crawler (parallel)
+  T+20:  All 4 features generated!
+  T+20-40: You integrate them one by one
+  T+40-60: You test them one by one
+
+Total time: ~1 hour for 4 major features! ⚡
+
+
+❌ COMMON MISTAKES (And How to Fix):
+════════════════════════════════════════════════════════════════════════════
+
+MISTAKE: Code has import errors
+  Fix: Check pyproject.toml - add missing packages if needed
+       Run: pip install -e .
+
+MISTAKE: UI theme looks wrong
+  Fix: Update stylesheet to use dark colors (#252525, #007acc)
+       Reference other tabs for correct theme
+
+MISTAKE: Hotkey doesn't work
+  Fix: Verify it's registered in main_window.py
+       Test with: keyboard.add_hotkey("ctrl+alt+x", print, args=("Works!",))
+
+MISTAKE: Config not saving
+  Fix: Ensure config/ directory exists
+       Call _save_config() after changes
+
+MISTAKE: UI feels frozen/slow
+  Fix: Move long operations to background thread
+       Never block main thread
+
+
+🎯 PRIORITY ORDER (Recommended Build Order):
+════════════════════════════════════════════════════════════════════════════
+
+WEEK 1:
+  Day 1: Clipboard Manager (30 min)
+  Day 2: Specialized Search (45 min)
+  Day 3: Web Scraper (60 min)
+  Day 4: Web Crawler (60 min)
+  
+Result: 4 powerful features ready!
+
+
+✅ AFTER EACH FEATURE:
+════════════════════════════════════════════════════════════════════════════
+
+After creating files:
+  [ ] Files created in correct directories
+  [ ] Imports added to main_window.py
+  [ ] Tab or hotkey registered
+  [ ] Styling matches dark theme
+  [ ] Threading used for long ops
+  [ ] Config file schema created
+
+After integration:
+  [ ] Run: python -m ai_hub.app
+  [ ] Feature appears (tab or works via hotkey)
+  [ ] No import errors in console
+  [ ] Test all functionality
+  [ ] Config file created in config/
+
+All green? ✅ Feature complete! Move to next one.
+
+
+📖 DOCUMENTATION REFERENCE:
+════════════════════════════════════════════════════════════════════════════
+
+QUICK START QUESTIONS:
+
+"What do I do first?"
+  → Read: 🚀_CLAUDE_SYSTEM_READY.txt
+
+"What features can I build?"
+  → Read: PROMPTS_READY_TO_USE.txt
+
+"How does the architecture work?"
+  → Read: CLAUDE_INTEGRATION_PROMPTS.md
+
+"I want to understand the big picture"
+  → Read: SCALING_GUIDE.md
+
+"I'm using GitHub Copilot/Claude API"
+  → Read: GITHUB_COPILOT_QUICK_START.md
+
+"What pattern should Claude follow?"
+  → Read: CLAUDE_FEATURE_TEMPLATE.md
+
+"How do I do X?"
+  → This file! (QUICK_REFERENCE_CARD.txt)
+
+
+🚀 YOU'RE READY:
+════════════════════════════════════════════════════════════════════════════
+
+Step 1: Open PROMPTS_READY_TO_USE.txt
+Step 2: Copy Prompt #1
+Step 3: Paste into Claude
+Step 4: Follow the workflow above
+Step 5: Feature complete!
+
+Repeat 3 more times and you have 4 features in a day! 🎉
+
+
+═══════════════════════════════════════════════════════════════════════════
+Keep this card handy while building! Good luck! 🚀
+═══════════════════════════════════════════════════════════════════════════
+
